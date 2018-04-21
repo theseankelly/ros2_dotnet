@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 
 using ROS2.Common;
 using ROS2.Interfaces;
+using ROS2.QoS;
 using ROS2.Utils;
 
 namespace ROS2 {
@@ -76,6 +77,10 @@ namespace ROS2 {
     public IntPtr Handle { get; }
 
     public IPublisher<T> CreatePublisher<T> (string topic) where T : IMessage {
+      return CreatePublisher<T> (topic, QoSProfile.Default);
+    }
+
+    public IPublisher<T> CreatePublisher<T> (string topic, QoSProfile qosProfile) where T : IMessage {
       MethodInfo m = typeof (T).GetTypeInfo().GetDeclaredMethod ("_GET_TYPE_SUPPORT");
 
       IntPtr typesupport = (IntPtr) m.Invoke (null, new object[] { });
@@ -86,6 +91,10 @@ namespace ROS2 {
     }
 
     public ISubscription<T> CreateSubscription<T> (string topic, Action<T> callback) where T : IMessage, new () {
+      return CreateSubscription<T> (topic, callback, QoSProfile.Default);
+    }
+
+    public ISubscription<T> CreateSubscription<T> (string topic, Action<T> callback, QoSProfile qosProfile) where T : IMessage, new () {
       MethodInfo m = typeof (T).GetTypeInfo().GetDeclaredMethod ("_GET_TYPE_SUPPORT");
 
       IntPtr typesupport = (IntPtr) m.Invoke (null, new object[] { });
