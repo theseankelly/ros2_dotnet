@@ -25,6 +25,6 @@ int32_t RCLDOTNET_CDECL native_rcl_create_publisher_handle(void **, void *,
 RCLDOTNET_EXPORT
 int32_t RCLDOTNET_CDECL native_rcl_create_subscription_handle(void **, void *,
                                                               const char *,
-                                                              void *);
+                                                              void *, void *);
 
 #endif // RCLDOTNET_NODE_H
