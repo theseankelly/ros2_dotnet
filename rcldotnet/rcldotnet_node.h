@@ -19,7 +19,7 @@
 
 RCLDOTNET_EXPORT
 int32_t RCLDOTNET_CDECL native_rcl_create_publisher_handle(void **, void *,
-                                                           const char *,
+                                                           const char *, void *,
                                                            void *);
 
 RCLDOTNET_EXPORT

@@ -21,7 +21,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-
 using ROS2.Common;
 using ROS2.Interfaces;
 using ROS2.QoS;
@@ -33,7 +32,7 @@ namespace ROS2 {
 
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
     internal delegate int NativeRCLCreatePublisherHandleType (
-      ref IntPtr publisherHandle, IntPtr nodeHandle, [MarshalAs (UnmanagedType.LPStr)] string nodeName, IntPtr typesupportHandle);
+      ref IntPtr publisherHandle, IntPtr nodeHandle, [MarshalAs (UnmanagedType.LPStr)] string nodeName, IntPtr qosProfileHandle, IntPtr typesupportHandle);
 
     internal static NativeRCLCreatePublisherHandleType native_rcl_create_publisher_handle = null;
 
@@ -83,10 +82,12 @@ namespace ROS2 {
     public IPublisher<T> CreatePublisher<T> (string topic, QoSProfile qosProfile) where T : IMessage {
       MethodInfo m = typeof (T).GetTypeInfo().GetDeclaredMethod ("_GET_TYPE_SUPPORT");
 
-      IntPtr typesupport = (IntPtr) m.Invoke (null, new object[] { });
+      IntPtr typesupportHandle = (IntPtr) m.Invoke (null, new object[] { });
+      IntPtr qosProfileHandle = RCLdotnet.ConvertQoSProfileToHandle (qosProfile);
       IntPtr publisherHandle = IntPtr.Zero;
-      RCLRet ret = (RCLRet) NodeDelegates.native_rcl_create_publisher_handle (ref publisherHandle, Handle, topic, typesupport);
+      RCLRet ret = (RCLRet) NodeDelegates.native_rcl_create_publisher_handle (ref publisherHandle, Handle, topic, qosProfileHandle, typesupportHandle);
       Publisher<T> publisher = new Publisher<T> (publisherHandle);
+      RCLdotnet.DisposeQoSProfile (qosProfileHandle);
       return publisher;
     }
 
