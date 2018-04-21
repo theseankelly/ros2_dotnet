@@ -38,7 +38,7 @@ namespace ROS2 {
 
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
     internal delegate int NativeRCLCreateSubscriptionHandleType (
-      ref IntPtr subscriptionHandle, IntPtr nodeHandle, [MarshalAs (UnmanagedType.LPStr)] string nodeName, IntPtr typesupportHandle);
+      ref IntPtr subscriptionHandle, IntPtr nodeHandle, [MarshalAs (UnmanagedType.LPStr)] string nodeName, IntPtr qosProfileHandle, IntPtr typesupportHandle);
 
     internal static NativeRCLCreateSubscriptionHandleType native_rcl_create_subscription_handle = null;
 
@@ -83,11 +83,11 @@ namespace ROS2 {
       MethodInfo m = typeof (T).GetTypeInfo().GetDeclaredMethod ("_GET_TYPE_SUPPORT");
 
       IntPtr typesupportHandle = (IntPtr) m.Invoke (null, new object[] { });
-      IntPtr qosProfileHandle = RCLdotnet.ConvertQoSProfileToHandle (qosProfile);
       IntPtr publisherHandle = IntPtr.Zero;
+      IntPtr qosProfileHandle = RCLdotnet.ConvertQoSProfileToHandle (qosProfile);
       RCLRet ret = (RCLRet) NodeDelegates.native_rcl_create_publisher_handle (ref publisherHandle, Handle, topic, qosProfileHandle, typesupportHandle);
-      Publisher<T> publisher = new Publisher<T> (publisherHandle);
       RCLdotnet.DisposeQoSProfile (qosProfileHandle);
+      Publisher<T> publisher = new Publisher<T> (publisherHandle);
       return publisher;
     }
 
@@ -98,9 +98,11 @@ namespace ROS2 {
     public ISubscription<T> CreateSubscription<T> (string topic, Action<T> callback, QoSProfile qosProfile) where T : IMessage, new () {
       MethodInfo m = typeof (T).GetTypeInfo().GetDeclaredMethod ("_GET_TYPE_SUPPORT");
 
-      IntPtr typesupport = (IntPtr) m.Invoke (null, new object[] { });
+      IntPtr typesupportHandle = (IntPtr) m.Invoke (null, new object[] { });
       IntPtr subscriptionHandle = IntPtr.Zero;
-      RCLRet ret = (RCLRet) NodeDelegates.native_rcl_create_subscription_handle (ref subscriptionHandle, Handle, topic, typesupport);
+      IntPtr qosProfileHandle = RCLdotnet.ConvertQoSProfileToHandle (qosProfile);
+      RCLRet ret = (RCLRet) NodeDelegates.native_rcl_create_subscription_handle (ref subscriptionHandle, Handle, topic, qosProfileHandle, typesupportHandle);
+      RCLdotnet.DisposeQoSProfile (qosProfileHandle);
       Subscription<T> subscription = new Subscription<T> (subscriptionHandle, callback);
       this.subscriptions_.Add (subscription);
       return subscription;
