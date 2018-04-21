@@ -32,7 +32,7 @@ namespace ROS2 {
 
         public enum History { SystemDefault = 0, KeepLast = 1, KeepAll = 2 };
 
-        public enum Reliability { SystemDefault = 0, Reliable = 1, BestEffort = 2};
+        public enum Reliability { SystemDefault = 0, Reliable = 1, BestEffort = 2 };
 
         public class QoSProfile {
             public History History { get; }
