@@ -23,12 +23,12 @@ strategy:
 
 steps:
 - script: |
+    echo "PATH %PATH% --"
     pip install vcstool
     pip install -U catkin_pkg EmPy pyparsing pyyaml
   displayName: 'Install dependencies'
 
 - script: |
-    echo "PATH %PATH%"
     md \dev\ament\src
     cd \dev\ament
     curl -sk https://raw.githubusercontent.com/esteve/ros2_dotnet/%BUILD_SOURCEBRANCHNAME%/ament_dotnet_uwp.repos -o ament_dotnet_uwp.repos
