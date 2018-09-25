@@ -55,8 +55,8 @@ steps:
       -DINSTALL_EXAMPLES=OFF ^
       -DCMAKE_FIND_ROOT_PATH="\dev\ament\install;\dev\ros2\install" ^
       --
-    displayName: 'Build ros2-dotnet for %'
-    condition: startsWith(variables.TARGET_PLATFORM, 'uwp') 
+  displayName: 'Build ros2-dotnet for %TARGET_PLATFORM%'
+  condition: startsWith(variables.TARGET_PLATFORM, 'uwp') 
 
 - script: |
     cd \dev\ament
@@ -70,5 +70,5 @@ steps:
       -DINSTALL_EXAMPLES=OFF ^
       -DCMAKE_FIND_ROOT_PATH="\dev\ament\install;\dev\ros2\install" ^
       --
-    displayName: 'Build ros2-dotnet for %'
-    condition: eq(variables.TARGET_PLATFORM, 'desktop')
+  displayName: 'Build ros2-dotnet for %TARGET_PLATFORM%'
+  condition: eq(variables.TARGET_PLATFORM, 'desktop')
