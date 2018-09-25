@@ -6,15 +6,19 @@ strategy:
     uwp_32:
       target_platform: 'uwp-32'
       target_generator: 'Visual Studio 15 2017'
+      PATH: '%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin'
     uwp_64:
       target_platform: 'uwp-64'
       target_generator: 'Visual Studio 15 2017 Win64'
+      PATH: '%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin'
     uwp_arm:
       target_platform: 'uwp_arm'
       target_generator: 'Visual Studio 15 2017 ARM'
+      PATH: '%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin'
     desktop:
       target_platform: 'desktop'
       target_generator: 'Visual Studio 15 2017 Win64'
+      PATH: '%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin'
   maxParallel: 4
 
 steps:
@@ -24,6 +28,7 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
+    echo "PATH %PATH%"
     md \dev\ament\src
     cd \dev\ament
     curl -sk https://raw.githubusercontent.com/esteve/ros2_dotnet/%BUILD_SOURCEBRANCHNAME%/ament_dotnet_uwp.repos -o ament_dotnet_uwp.repos
@@ -56,7 +61,7 @@ steps:
       -DCMAKE_FIND_ROOT_PATH="\dev\ament\install;\dev\ros2\install" ^
       --
   displayName: 'Build ros2-dotnet for %TARGET_PLATFORM%'
-  condition: startsWith(variables.TARGET_PLATFORM, 'uwp') 
+  condition: startsWith(variables.TARGET_PLATFORM, 'uwp')
 
 - script: |
     cd \dev\ament
