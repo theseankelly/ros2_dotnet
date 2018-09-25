@@ -23,13 +23,14 @@ strategy:
 
 steps:
 - script: |
-    echo "PYTHON %PYTHON% --"
     echo "PATH %PATH% --"
     pip install vcstool
     pip install -U catkin_pkg EmPy pyparsing pyyaml
   displayName: 'Install dependencies'
 
 - script: |
+    set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
+    echo "PATH %PATH% --"
     md \dev\ament\src
     cd \dev\ament
     curl -sk https://raw.githubusercontent.com/esteve/ros2_dotnet/%BUILD_SOURCEBRANCHNAME%/ament_dotnet_uwp.repos -o ament_dotnet_uwp.repos
@@ -39,6 +40,8 @@ steps:
   displayName: 'Build ament'
 
 - script: |
+    set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
+    echo "PATH %PATH% --"
     md \dev\ros2\src
     cd \dev\ros2
     curl -sk https://raw.githubusercontent.com/esteve/ros2_dotnet/%BUILD_SOURCEBRANCHNAME%/ros2_dotnet_uwp.repos -o ros2_dotnet_uwp.repos
@@ -48,6 +51,8 @@ steps:
   displayName: 'Fetch ros2-dotnet repositories'
 
 - script: |
+    set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
+    echo "PATH %PATH% --"
     cd \dev\ament
     call install\local_setup.bat
     cd \dev\ros2
@@ -65,6 +70,8 @@ steps:
   condition: startsWith(variables.TARGET_PLATFORM, 'uwp')
 
 - script: |
+    set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
+    echo "PATH %PATH% --"
     cd \dev\ament
     call install\local_setup.bat
     cd \dev\ros2
