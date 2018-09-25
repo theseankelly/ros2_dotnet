@@ -6,31 +6,25 @@ strategy:
     uwp_32:
       target_platform: 'uwp-32'
       target_generator: 'Visual Studio 15 2017'
-      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
     uwp_64:
       target_platform: 'uwp-64'
       target_generator: 'Visual Studio 15 2017 Win64'
-      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
     uwp_arm:
       target_platform: 'uwp_arm'
       target_generator: 'Visual Studio 15 2017 ARM'
-      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
     desktop:
       target_platform: 'desktop'
       target_generator: 'Visual Studio 15 2017 Win64'
-      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
   maxParallel: 4
 
 steps:
 - script: |
-    echo "PATH %PATH% --"
     pip install vcstool
     pip install -U catkin_pkg EmPy pyparsing pyyaml
   displayName: 'Install dependencies'
 
 - script: |
     set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
-    echo "PATH %PATH% --"
     md \dev\ament\src
     cd \dev\ament
     curl -sk https://raw.githubusercontent.com/esteve/ros2_dotnet/%BUILD_SOURCEBRANCHNAME%/ament_dotnet_uwp.repos -o ament_dotnet_uwp.repos
@@ -41,7 +35,6 @@ steps:
 
 - script: |
     set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
-    echo "PATH %PATH% --"
     md \dev\ros2\src
     cd \dev\ros2
     curl -sk https://raw.githubusercontent.com/esteve/ros2_dotnet/%BUILD_SOURCEBRANCHNAME%/ros2_dotnet_uwp.repos -o ros2_dotnet_uwp.repos
@@ -52,7 +45,6 @@ steps:
 
 - script: |
     set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
-    echo "PATH %PATH% --"
     cd \dev\ament
     call install\local_setup.bat
     cd \dev\ros2
@@ -66,12 +58,11 @@ steps:
       -DINSTALL_EXAMPLES=OFF ^
       -DCMAKE_FIND_ROOT_PATH="\dev\ament\install;\dev\ros2\install" ^
       --
-  displayName: 'Build ros2-dotnet for $(target_platform)'
+  displayName: 'Build ros2-dotnet'
   condition: startsWith(variables.TARGET_PLATFORM, 'uwp')
 
 - script: |
     set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
-    echo "PATH %PATH% --"
     cd \dev\ament
     call install\local_setup.bat
     cd \dev\ros2
@@ -83,5 +74,5 @@ steps:
       -DINSTALL_EXAMPLES=OFF ^
       -DCMAKE_FIND_ROOT_PATH="\dev\ament\install;\dev\ros2\install" ^
       --
-  displayName: "Build ros2-dotnet for $(target_platform)"
+  displayName: 'Build ros2-dotnet'
   condition: eq(variables.TARGET_PLATFORM, 'desktop')
