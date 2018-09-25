@@ -66,7 +66,7 @@ steps:
       -DINSTALL_EXAMPLES=OFF ^
       -DCMAKE_FIND_ROOT_PATH="\dev\ament\install;\dev\ros2\install" ^
       --
-  displayName: 'Build ros2-dotnet for ${{ variables.TARGET_PLATFORM }}'
+  displayName: 'Build ros2-dotnet for $(target_platform)'
   condition: startsWith(variables.TARGET_PLATFORM, 'uwp')
 
 - script: |
@@ -83,5 +83,5 @@ steps:
       -DINSTALL_EXAMPLES=OFF ^
       -DCMAKE_FIND_ROOT_PATH="\dev\ament\install;\dev\ros2\install" ^
       --
-  displayName: "Build ros2-dotnet for ${{ variables.TARGET_PLATFORM }}"
+  displayName: "Build ros2-dotnet for $(target_platform)"
   condition: eq(variables.TARGET_PLATFORM, 'desktop')
