@@ -6,23 +6,24 @@ strategy:
     uwp_32:
       target_platform: 'uwp-32'
       target_generator: 'Visual Studio 15 2017'
-      PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
+      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
     uwp_64:
       target_platform: 'uwp-64'
       target_generator: 'Visual Studio 15 2017 Win64'
-      PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
+      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
     uwp_arm:
       target_platform: 'uwp_arm'
       target_generator: 'Visual Studio 15 2017 ARM'
-      PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
+      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
     desktop:
       target_platform: 'desktop'
       target_generator: 'Visual Studio 15 2017 Win64'
-      PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
+      #PATH: "%PYTHON%;%PYTHON%\Scripts;%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
   maxParallel: 4
 
 steps:
 - script: |
+    echo "PYTHON %PYTHON% --"
     echo "PATH %PATH% --"
     pip install vcstool
     pip install -U catkin_pkg EmPy pyparsing pyyaml
