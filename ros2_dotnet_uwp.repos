@@ -23,10 +23,6 @@ repositories:
     type: git
     url: https://github.com/ros2/example_interfaces.git
     version: 0.5.0
-  ros2/launch:
-    type: git
-    url: https://github.com/ros2/launch.git
-    version: 0.5.2
   ros2/libyaml_vendor:
     type: git
     url: https://github.com/ros2/libyaml_vendor.git
@@ -39,10 +35,6 @@ repositories:
     type: git
     url: https://github.com/ros2/rcl_interfaces.git
     version: master
-  ros2/rclpy:
-    type: git
-    url: https://github.com/ros2/rclpy.git
-    version: 0.5.3
   ros2/rmw:
     type: git
     url: https://github.com/ros2/rmw.git
@@ -63,10 +55,6 @@ repositories:
     type: git
     url: https://github.com/ros2/rosidl_typesupport_opensplice.git
     version: 0.5.0
-  ros2/ros2cli:
-    type: git
-    url: https://github.com/ros2/ros2cli.git
-    version: 0.5.3
   ros2/rosidl:
     type: git
     url: https://github.com/ros2/rosidl.git
