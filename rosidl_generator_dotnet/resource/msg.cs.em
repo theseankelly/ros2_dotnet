@@ -164,7 +164,7 @@ public class @(type_name) : IMessage {
 @[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
         native_write_field_@(member.name)(messageHandle, @(get_field_name(type_name, member.name)));
 @[    else]@
-// TODO: Nested types are not supported
+        @(get_field_name(type_name, member.name))._WRITE_HANDLE(messageHandle);
 @[    end if]@
 @[end for]@
     }
@@ -188,7 +188,7 @@ public class @(type_name) : IMessage {
 @[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
     public @(get_dotnet_type(member.type)) @(get_field_name(type_name, member.name)) { get; set; }
 @[    else]@
-// TODO: Nested types are not supported
+    public @(get_dotnet_type(member.type)) @(get_field_name(type_name, member.name)) { get; set; }
 @[    end if]@
 @[end for]@
 }
