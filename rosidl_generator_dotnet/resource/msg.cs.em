@@ -30,7 +30,21 @@ namespace @(ns)
 public class @(type_name) : IMessage {
     private static readonly DllLoadUtils dllLoadUtils;
 
-    public @(type_name)() {}
+    public @(type_name)()
+    {
+@[for member in message.structure.members]@
+@[    if isinstance(member.type, Array)]@
+// TODO: Array types are not supported
+@[    elif isinstance(member.type, AbstractSequence)]@
+// TODO: Sequence types are not supported
+@[    elif isinstance(member.type, AbstractWString)]@
+// TODO: Unicode types are not supported
+@[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
+@[    else]@
+        @(get_field_name(type_name, member.name)) = new @(get_dotnet_type(member.type))();
+@[    end if]@
+@[end for]@
+    }
 
     static @(type_name)()
     {
@@ -148,7 +162,7 @@ public class @(type_name) : IMessage {
         @(get_field_name(type_name, member.name)) = native_read_field_@(member.name)(messageHandle);
 @[        end if]@
 @[    else]@
-// TODO: Nested types are not supported
+        @(get_field_name(type_name, member.name))._READ_HANDLE(messageHandle);
 @[    end if]@
 @[end for]@
     }
