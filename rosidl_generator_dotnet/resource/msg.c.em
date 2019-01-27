@@ -84,7 +84,10 @@ void @(msg_typename)__write_field_@(member.name)(void * message_handle, @(msg_ty
 @[        end if]@
 }
 @[    else]@
-// TODO: Nested types are not supported
+void * @(msg_typename)__get_field_@(member.name)_message(void * raw_ros_message) {
+    @(msg_typename) * ros_message = (@(msg_typename) *)raw_ros_message;
+    return &(ros_message->@(member.name));
+}
 @[    end if]@
 @[end for]@
 

@@ -86,7 +86,10 @@ public class @(type_name) : IMessage {
             (NativeWriteField@(get_field_name(type_name, member.name))Type)Marshal.GetDelegateForFunctionPointer(
             native_write_field_@(member.name)_ptr, typeof(NativeWriteField@(get_field_name(type_name, member.name))Type));
 @[    else]@
-// TODO: Nested types are not supported
+        IntPtr native_get_field_@(member.name)_message_ptr = dllLoadUtils.GetProcAddress(nativelibrary, "@(msg_typename)__get_field_@(member.name)_message");
+
+        @(type_name).native_get_field_@(member.name)_message = (NativeGetField@(get_field_name(type_name, member.name))MessageType)Marshal.GetDelegateForFunctionPointer(
+            native_get_field_@(member.name)_message_ptr, typeof(NativeGetField@(get_field_name(type_name, member.name))MessageType));
 @[    end if]@
 @[end for]@
     }
@@ -134,7 +137,11 @@ public class @(type_name) : IMessage {
 
     private static NativeWriteField@(get_field_name(type_name, member.name))Type native_write_field_@(member.name) = null;
 @[    else]@
-// TODO: Nested types are not supported
+    private static NativeGetField@(get_field_name(type_name, member.name))MessageType native_get_field_@(member.name)_message = null;
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    private delegate IntPtr NativeGetField@(get_field_name(type_name, member.name))MessageType(
+        IntPtr messageHandle);
 @[    end if]@
 @[end for]@
 
@@ -162,7 +169,7 @@ public class @(type_name) : IMessage {
         @(get_field_name(type_name, member.name)) = native_read_field_@(member.name)(messageHandle);
 @[        end if]@
 @[    else]@
-        @(get_field_name(type_name, member.name))._READ_HANDLE(messageHandle);
+        @(get_field_name(type_name, member.name))._READ_HANDLE(native_get_field_@(member.name)_message(messageHandle));
 @[    end if]@
 @[end for]@
     }
@@ -178,7 +185,7 @@ public class @(type_name) : IMessage {
 @[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
         native_write_field_@(member.name)(messageHandle, @(get_field_name(type_name, member.name)));
 @[    else]@
-        @(get_field_name(type_name, member.name))._WRITE_HANDLE(messageHandle);
+        @(get_field_name(type_name, member.name))._WRITE_HANDLE(native_get_field_@(member.name)_message(messageHandle));
 @[    end if]@
 @[end for]@
     }
