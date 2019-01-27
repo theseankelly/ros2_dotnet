@@ -31,7 +31,7 @@ What's missing?
 Lots of things!
 - Unicode types
 - String constants (specifically BoundedString)
-- Nested types
+- Collection types
 - Component nodes
 - Clients and services
 - Actions
