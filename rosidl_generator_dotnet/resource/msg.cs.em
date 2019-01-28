@@ -40,6 +40,9 @@ public class @(type_name) : IMessage {
 @[    elif isinstance(member.type, AbstractWString)]@
 // TODO: Unicode types are not supported
 @[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
+@[        if isinstance(member.type, AbstractString)]@
+        @(get_field_name(type_name, member.name)) = "";
+@[        end if]@
 @[    else]@
         @(get_field_name(type_name, member.name)) = new @(get_dotnet_type(member.type))();
 @[    end if]@
