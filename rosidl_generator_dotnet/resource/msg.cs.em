@@ -89,10 +89,10 @@ public class @(type_name) : IMessage {
             (NativeWriteField@(get_field_name(type_name, member.name))Type)Marshal.GetDelegateForFunctionPointer(
             native_write_field_@(member.name)_ptr, typeof(NativeWriteField@(get_field_name(type_name, member.name))Type));
 @[    else]@
-        IntPtr native_get_field_@(member.name)_message_ptr = dllLoadUtils.GetProcAddress(nativelibrary, "@(msg_typename)__get_field_@(member.name)_message");
+        IntPtr native_get_field_@(member.name)_ptr = dllLoadUtils.GetProcAddress(nativelibrary, "@(msg_typename)__get_field_@(member.name)");
 
-        @(type_name).native_get_field_@(member.name)_message = (NativeGetField@(get_field_name(type_name, member.name))MessageType)Marshal.GetDelegateForFunctionPointer(
-            native_get_field_@(member.name)_message_ptr, typeof(NativeGetField@(get_field_name(type_name, member.name))MessageType));
+        @(type_name).native_get_field_@(member.name) = (NativeGetField@(get_field_name(type_name, member.name))MessageType)Marshal.GetDelegateForFunctionPointer(
+            native_get_field_@(member.name)_ptr, typeof(NativeGetField@(get_field_name(type_name, member.name))MessageType));
 @[    end if]@
 @[end for]@
     }
@@ -140,7 +140,7 @@ public class @(type_name) : IMessage {
 
     private static NativeWriteField@(get_field_name(type_name, member.name))Type native_write_field_@(member.name) = null;
 @[    else]@
-    private static NativeGetField@(get_field_name(type_name, member.name))MessageType native_get_field_@(member.name)_message = null;
+    private static NativeGetField@(get_field_name(type_name, member.name))MessageType native_get_field_@(member.name) = null;
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     private delegate IntPtr NativeGetField@(get_field_name(type_name, member.name))MessageType(
@@ -172,7 +172,7 @@ public class @(type_name) : IMessage {
         @(get_field_name(type_name, member.name)) = native_read_field_@(member.name)(messageHandle);
 @[        end if]@
 @[    else]@
-        @(get_field_name(type_name, member.name))._READ_HANDLE(native_get_field_@(member.name)_message(messageHandle));
+        @(get_field_name(type_name, member.name))._READ_HANDLE(native_get_field_@(member.name)(messageHandle));
 @[    end if]@
 @[end for]@
     }
@@ -188,7 +188,7 @@ public class @(type_name) : IMessage {
 @[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
         native_write_field_@(member.name)(messageHandle, @(get_field_name(type_name, member.name)));
 @[    else]@
-        @(get_field_name(type_name, member.name))._WRITE_HANDLE(native_get_field_@(member.name)_message(messageHandle));
+        @(get_field_name(type_name, member.name))._WRITE_HANDLE(native_get_field_@(member.name)(messageHandle));
 @[    end if]@
 @[end for]@
     }
@@ -209,8 +209,6 @@ public class @(type_name) : IMessage {
 // TODO: Sequence types are not supported
 @[    elif isinstance(member.type, AbstractWString)]@
 // TODO: Unicode types are not supported
-@[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
-    public @(get_dotnet_type(member.type)) @(get_field_name(type_name, member.name)) { get; set; }
 @[    else]@
     public @(get_dotnet_type(member.type)) @(get_field_name(type_name, member.name)) { get; set; }
 @[    end if]@
