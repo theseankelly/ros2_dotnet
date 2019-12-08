@@ -60,20 +60,7 @@ const void * @(msg_typename)__get_typesupport() {
   return ros_message->@(member.name);
 @[        end if]@
 }
-@[    else]@
-// TODO: Nested types are not supported
-@[    end if]@
-@[end for]@
 
-
-@[for member in message.structure.members]@
-@[    if isinstance(member.type, Array)]@
-// TODO: Array types are not supported
-@[    elif isinstance(member.type, AbstractSequence)]@
-// TODO: Sequence types are not supported
-@[    elif isinstance(member.type, AbstractWString)]@
-// TODO: Unicode types are not supported
-@[    elif isinstance(member.type, BasicType) or isinstance(member.type, AbstractString)]@
 void @(msg_typename)__write_field_@(member.name)(void * message_handle, @(msg_type_to_c(member.type)) value) {
   @(msg_typename) * ros_message = (@(msg_typename) *)message_handle;
 @[        if isinstance(member.type, AbstractGenericString)]@
