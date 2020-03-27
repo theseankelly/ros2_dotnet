@@ -19,10 +19,6 @@ repositories:
     type: git
     url: https://github.com/ament/googletest.git
     version: ros2
-  ament/osrf_pycommon:
-    type: git
-    url: https://github.com/osrf/osrf_pycommon.git
-    version: eloquent
   ament/uncrustify_vendor:
     type: git
     url: https://github.com/ament/uncrustify_vendor.git
@@ -47,6 +43,22 @@ repositories:
     type: git
     url: https://gitlab.com/micro-ROS/ros_tracing/ros2_tracing.git
     version: 0.2.10
+  osrf/osrf_pycommon:
+    type: git
+    url: https://github.com/osrf/osrf_pycommon.git
+    version: eloquent
+  osrf/osrf_testing_tools_cpp:
+    type: git
+    url: https://github.com/osrf/osrf_testing_tools_cpp.git
+    version: eloquent
+  ros/class_loader:
+    type: git
+    url: https://github.com/ros/class_loader.git
+    version: eloquent
+  ros2/console_bridge_vendor:
+    type: git
+    url: https://github.com/ros2/console_bridge_vendor.git
+    version: eloquent
   ros2/ament_cmake_ros:
     type: git
     url: https://github.com/ros2/ament_cmake_ros.git
@@ -87,6 +99,10 @@ repositories:
     type: git
     url: https://github.com/ros2/rcl_interfaces.git
     version: eloquent
+  ros2/rclcpp:
+    type: git
+    url: https://github.com/ros2/rclcpp.git
+    version: eloquent 
   ros2/rclpy:
     type: git
     url: https://github.com/ros2/rclpy.git
@@ -127,6 +143,10 @@ repositories:
     type: git
     url: https://github.com/ros2/rosidl_python.git
     version: eloquent
+  ros2/rosidl_runtime_py:
+    type: git
+    url: https://github.com/ros2/rosidl_runtime_py.git
+    version: eloquent
   ros2/rosidl_typesupport:
     type: git
     url: https://github.com/ros2-dotnet/rosidl_typesupport.git
@@ -134,6 +154,14 @@ repositories:
   ros2/rosidl_typesupport_fastrtps:
     type: git
     url: https://github.com/ros2/rosidl_typesupport_fastrtps.git
+    version: eloquent
+  ros2/python_cmake_module:
+    type: git
+    url: https://github.com/ros2/python_cmake_module.git
+    version: eloquent
+  ros2/spdlog_vendor:
+    type: git
+    url: https://github.com/ros2/spdlog_vendor.git
     version: eloquent
   ros2/test_interface_files:
     type: git
